@@ -42,7 +42,16 @@ jobs:
         run: |
           pipenv install --deploy --dev
 
-      # Run all the tests including full details and coverage
-      - name: 🧪 Test with pytest
+      # Run all the tests
+      - name: 🧪 Tests with pytest
         run: |
-          pipenv run pytest -v --cov
+          pipenv run pytest -v
+
+      # Create a coverage report
+      - name: 📝 Build coverage report
+        run: |
+          pipenv run pytest --cache-clear --cov-report term:skip-covered --cov=app tests/ > pytest-coverage.txt
+
+      # Write the coverage report as a comment on the pull request
+      - name: 💬 Pytest Coverage Commentator
+        uses: coroo/pytest-coverage-commentator@v1.0.2
