@@ -22,7 +22,6 @@ jobs:
         with:
           python-version: "3.11"
           architecture: "x64"
-          cache: "pip"
 
       # Install pipenv
       - name: ⚙️ Install pipenv
