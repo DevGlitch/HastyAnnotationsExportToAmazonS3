@@ -41,6 +41,7 @@ jobs:
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
           pipenv install --deploy --dev
+          pipenv shell
 
       # Run all the tests including full details and coverage
       - name: 🧪 Test with pytest
