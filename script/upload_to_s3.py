@@ -15,7 +15,7 @@ class Upload2S3:
 
     def __init__(self):
 
-        logger.info("Initializing Upload to S3...")
+        logger.info("Initializing Upload2S3...")
 
         # Get the environment variables
         logger.info("Getting environment variables...")
@@ -26,8 +26,9 @@ class Upload2S3:
             self.bucket_region = os.environ["S3_BUCKET_REGION"]
             self.project_name = os.environ["HASTY_PROJECT_NAME"]
         except KeyError:
-            logger.error("Please set all environment variables")
-            exit(1)
+            logger.error("Missing environment variables")
+            raise KeyError("Please set all environment variables")
+
         logger.info("Environment variables successfully retrieved!")
 
         # Object name is the name of the file that will be uploaded to S3 bucket
@@ -42,7 +43,7 @@ class Upload2S3:
                                )
         logger.info("S3 client initialized!")
 
-    def run(self):
+    def run(self):  # pragma: no cover
         """Runs the script."""
         self.upload()
 
