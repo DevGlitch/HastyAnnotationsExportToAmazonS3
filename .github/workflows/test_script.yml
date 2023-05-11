@@ -50,7 +50,7 @@ jobs:
       # Create a coverage report
       - name: 📝 Build coverage report
         run: |
-          pipenv run pytest --cache-clear --cov-report term:skip-covered --cov=app tests/ > pytest-coverage.txt
+          pipenv run pytest --cache-clear --cov-report term:skip-covered --cov=app script/tests/ > pytest-coverage.txt
 
       # Write the coverage report as a comment on the pull request
       - name: 💬 Pytest Coverage Commentator
