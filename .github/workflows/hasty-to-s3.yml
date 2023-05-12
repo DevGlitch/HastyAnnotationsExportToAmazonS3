@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  WORKING_DIR: ${{ github.workspace }} + "/"
+  WORKING_DIR: "../data/"
   HASTY_API_KEY: ${{ secrets.HASTY_API_KEY }}
   HASTY_PROJECT_NAME: ${{ secrets.HASTY_PROJECT_NAME }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
