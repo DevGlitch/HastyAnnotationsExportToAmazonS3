@@ -63,9 +63,9 @@ jobs:
       # Step to download the annotation file
       - name: 📥 Download Hasty annotations
         run: |
-          pipenv run python download_from_hasty.py
+          pipenv run python script/download_from_hasty.py
 
       # Step to upload the annotation file to AWS S3
       - name: 📤 Upload annotation to S3 bucket
         run: |
-          pipenv run python upload_to_s3.py
+          pipenv run python script/upload_to_s3.py
