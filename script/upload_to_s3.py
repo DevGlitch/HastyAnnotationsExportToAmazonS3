@@ -25,6 +25,7 @@ class Upload2S3:
             self.bucket_name = os.environ["AWS_S3_BUCKET_NAME"]
             self.bucket_region = os.environ["AWS_S3_BUCKET_REGION"]
             self.project_name = os.environ["HASTY_PROJECT_NAME"]
+            self.working_dir = os.environ["WORKING_DIR"]
         except KeyError:
             logger.error("Missing environment variables")
             raise KeyError("Please set all environment variables")
@@ -33,6 +34,7 @@ class Upload2S3:
 
         # Object name is the name of the file that will be uploaded to S3 bucket
         self.object_name = (re.sub("[^A-Za-z0-9]+", "_", string=self.project_name) + "_hasty_project_annotations.json")
+        self.object_path = self.working_dir + self.object_name
 
         # Initialize the S3 client
         logger.info("Initializing S3 client...")
@@ -54,7 +56,7 @@ class Upload2S3:
             ACL="private",
             Bucket=self.bucket_name,
             Key=self.object_name,
-            Body=open(self.object_name, "rb"),
+            Body=open(self.object_path, "rb"),
             ServerSideEncryption="AES256",
             StorageClass="INTELLIGENT_TIERING",
         )
