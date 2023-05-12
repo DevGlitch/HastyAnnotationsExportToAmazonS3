@@ -11,6 +11,10 @@ on:
   # Allows you to trigger this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  contents: read
+  id-token: write
+
 # Allow only one workflow run at a time
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
