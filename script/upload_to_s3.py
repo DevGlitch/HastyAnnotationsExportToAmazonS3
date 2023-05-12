@@ -22,8 +22,8 @@ class Upload2S3:
         try:
             self.access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
             self.secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
-            self.bucket_name = os.environ["S3_BUCKET_NAME"]
-            self.bucket_region = os.environ["S3_BUCKET_REGION"]
+            self.bucket_name = os.environ["AWS_S3_BUCKET_NAME"]
+            self.bucket_region = os.environ["AWS_S3_BUCKET_REGION"]
             self.project_name = os.environ["HASTY_PROJECT_NAME"]
         except KeyError:
             logger.error("Missing environment variables")
