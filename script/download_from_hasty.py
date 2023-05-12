@@ -51,9 +51,7 @@ class DownloadAnnotationsFromHasty:
 
         # Get the list of all projects.
         projects = self.client.get_projects()
-        print(projects)
-        for i in projects:
-            print(i.name)
+
         # Find the project with the given name.
         project = next((p for p in projects if p.name == self.project_name), None)
 
