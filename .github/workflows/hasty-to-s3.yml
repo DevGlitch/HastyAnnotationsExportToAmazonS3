@@ -1,0 +1,71 @@
+# This is the workflow file for exporting Hasty annotations to AWS S3.
+# See documentation for more details.
+
+name: 🚀 Export Hasty Project Annotations to AWS S3
+
+on:
+  # Trigger the workflow on schedule at specific UTC times using POSIX cron syntax
+#  schedule:
+#    - cron: "0 6 1 * *"  # Run at 6am UTC (=2am ET) on the 1st day of each month
+
+  # Allows you to trigger this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Allow only one workflow run at a time
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  WORKING_DIR: ${{ GITHUB_WORKSPACE }}
+  HASTY_API_KEY: ${{ secrets.HASTY_API_KEY }}
+  HASTY_PROJECT_NAME: ${{ secrets.HASTY_PROJECT_NAME }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+  AWS_S3_BUCKET_REGION: ${{ secrets.AWS_S3_BUCKET_REGION }}
+
+jobs:
+  export-annotations:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout the repository
+      - name: 🛒 Checkout
+        uses: actions/checkout@v3
+
+      # Setting up Python
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          architecture: "x64"
+
+      # Install pipenv
+      - name: ⚙️ Install pipenv
+        run: |
+          python -m pip install --upgrade pipenv wheel
+
+      # Cache pipenv
+      - name: 🗃️ Cache pipenv
+        id: cache-pipenv
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+
+      # Install dependencies from Pipfile.lock
+      - name: ⚙️ Install dependencies
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: |
+          pipenv install --deploy --dev
+
+      # Step to download the annotation file
+      - name: 📥 Download Hasty annotations
+        run: |
+          pipenv run python download_from_hasty.py
+
+      # Step to upload the annotation file to AWS S3
+      - name: 📤 Upload annotation to S3 bucket
+        run: |
+          pipenv run python upload_to_s3.py

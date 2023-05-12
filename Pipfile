@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+pytest = "*"
+pytest-cov = "*"
+moto= "4.1.8"
+
+[packages]
+hasty= "0.3.6"
+boto3= "1.16.28"
+
+[requires]
+python_version = "3.11"
