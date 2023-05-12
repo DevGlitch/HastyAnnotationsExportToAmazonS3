@@ -45,19 +45,11 @@ jobs:
       # Run all the tests
       - name: 🧪 Tests with pytest
         run: |
-          pipenv run pytest -v --cov --junitxml="data/report.xml"
+          pipenv run pytest --junitxml=pytest.xml -v --cov script/ > pytest-coverage.txt 
 
       # Write the coverage report as a comment on the pull request
       - name: 💬 Pytest Coverage Comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
-          pytest-xml-coverage-path: ./data/report.xml
-          title: Coverage Report
-          badge-title: My Badge Coverage Title
-          hide-badge: false
-          hide-report: false
-          create-new-comment: false
-          hide-comment: false
-          report-only-changed-files: false
-          remove-link-from-badge: false
-          unique-id-for-comment: python3.11
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
