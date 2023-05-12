@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 permissions:
-  contents: read
-  pull-requests: write
+  contents: read  # Default permission to be able to checkout the repository
+  pull-requests: write  # Needed to write the coverage report as a comment on the pull request
 
 jobs:
   test:
