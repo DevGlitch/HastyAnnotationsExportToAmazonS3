@@ -16,7 +16,8 @@ class TestUpload2S3(TestCase):
                              "AWS_SECRET_ACCESS_KEY": "test_secret",
                              "AWS_S3_BUCKET_NAME": "test_bucket",
                              "AWS_S3_BUCKET_REGION": "us-east-1",
-                             "HASTY_PROJECT_NAME": "test_project"})
+                             "HASTY_PROJECT_NAME": "test_project",
+                             "WORKING_DIR": "test_dir"})
     def test_init_success(self):
         client = boto3.client('s3', region_name=os.environ["AWS_S3_BUCKET_REGION"])
         client.create_bucket(Bucket=os.environ["AWS_S3_BUCKET_NAME"])
@@ -31,6 +32,7 @@ class TestUpload2S3(TestCase):
         self.assertEqual(uploader.bucket_name, "test_bucket")
         self.assertEqual(uploader.bucket_region, "us-east-1")
         self.assertEqual(uploader.project_name, "test_project")
+        self.assertEqual(uploader.working_dir, "test_dir")
 
         # Assert that the object name was correctly generated
         self.assertEqual(uploader.object_name, "test_project_hasty_project_annotations.json")
