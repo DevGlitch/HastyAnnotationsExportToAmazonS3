@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  WORKING_DIR: "../data/"
+  WORKING_DIR: "/"
   HASTY_API_KEY: ${{ secrets.HASTY_API_KEY }}
   HASTY_PROJECT_NAME: ${{ vars.HASTY_PROJECT_NAME }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
