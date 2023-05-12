@@ -11,17 +11,13 @@ on:
   # Allows you to trigger this workflow manually from the Actions tab
   workflow_dispatch:
 
-permissions:
-  contents: write
-  id-token: write
-
 # Allow only one workflow run at a time
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 env:
-  WORKING_DIR: "/"
+  WORKING_DIR: ""
   HASTY_API_KEY: ${{ secrets.HASTY_API_KEY }}
   HASTY_PROJECT_NAME: ${{ vars.HASTY_PROJECT_NAME }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
