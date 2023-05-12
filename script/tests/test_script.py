@@ -14,12 +14,12 @@ class TestUpload2S3(TestCase):
     @mock_s3
     @patch.dict(os.environ, {"AWS_ACCESS_KEY_ID": "test_key",
                              "AWS_SECRET_ACCESS_KEY": "test_secret",
-                             "S3_BUCKET_NAME": "test_bucket",
-                             "S3_BUCKET_REGION": "us-east-1",
+                             "AWS_S3_BUCKET_NAME": "test_bucket",
+                             "AWS_S3_BUCKET_REGION": "us-east-1",
                              "HASTY_PROJECT_NAME": "test_project"})
     def test_init_success(self):
-        client = boto3.client('s3', region_name=os.environ["S3_BUCKET_REGION"])
-        client.create_bucket(Bucket=os.environ["S3_BUCKET_NAME"])
+        client = boto3.client('s3', region_name=os.environ["AWS_S3_BUCKET_REGION"])
+        client.create_bucket(Bucket=os.environ["AWS_S3_BUCKET_NAME"])
 
         with self.assertLogs("script.upload_to_s3", level="INFO") as mock_logger:
             # Instantiate Upload2S3 class
