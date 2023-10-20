@@ -20,6 +20,8 @@ env:
   WORKING_DIR: ""
   HASTY_API_KEY: ${{ secrets.HASTY_API_KEY }}
   HASTY_PROJECT_NAME: ${{ vars.HASTY_PROJECT_NAME }}
+  CONVERT_FORMAT: "parquet"  # Options: csv or parquet. Otherwise leave blank
+  EXCLUDE_LABELS: '["polygon", "z_index", "mask", "id"]' # Labels you'd like to exclude during conversion
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
@@ -65,7 +67,12 @@ jobs:
         run: |
           pipenv run python script/download_from_hasty.py
 
-      # Step to upload the annotation file to AWS S3
+      # Step to convert annotation (JSON) file to the desired conversion format (csv or parquet)
+      - name: 🔄 Convert annotations file
+        run: |
+          pipenv run python script/convert_json.py
+
+      # Step to upload the annotation file and converted file to AWS S3
       - name: 📤 Upload annotation to S3 bucket
         run: |
           pipenv run python script/upload_to_s3.py
