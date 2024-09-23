@@ -2,6 +2,12 @@
 Tool that helps you export your annotations from Hasty.ai to Amazon S3 on demand and/or on schedule.
 It uses GitHub Actions to run the export script which makes it easy to set up and run automatically.
 
+---
+
+⚠️ **Important:** This project is no longer actively maintained. However, you're welcome to fork the repository and modify it to suit your needs.
+
+---
+
 ## How to use
 
 ### 1. Fork this repository
